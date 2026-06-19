@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TCG Vault — Pokémon + Riftbound Deck Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">TCG Vault</p>
+      <h1>Phone-first card database, deck tracker and budget competitive finder.</h1>
+      <p>Track Pokémon and Riftbound cards, build decks, search prices, compare totals and prep for AI camera identification.</p>
+    </div>
+    <div class="hero-card">
+      <span>Current deck</span>
+      <strong id="deckCount">0 / 60</strong>
+      <small id="deckCost">$0.00 estimated</small>
+    </div>
+  </header>
+
+  <main class="tabs">
+    <nav class="tabbar" aria-label="App sections">
+      <button class="tab active" data-tab="search">Search</button>
+      <button class="tab" data-tab="scanner">Phone Scan</button>
+      <button class="tab" data-tab="deck">Deck Build</button>
+      <button class="tab" data-tab="topdecks">Top Decks</button>
+      <button class="tab" data-tab="budget">Budget Finder</button>
+      <button class="tab" data-tab="agents">AI Agents</button>
+    </nav>
+
+    <section id="search" class="panel tab-panel active">
+      <h2>Card database search</h2>
+      <div class="controls">
+        <select id="gameSelect"><option value="pokemon">Pokémon</option><option value="riftbound">Riftbound</option></select>
+        <input id="query" placeholder="Search card name eg Charizard, Boss, Jinx" value="Pikachu" />
+        <button id="searchBtn">Search cards</button>
+      </div>
+      <p class="hint">Pokémon uses the public PokémonTCG API when online. Riftbound is local/manual until a reliable public database exists.</p>
+      <div id="results" class="card-grid"></div>
+    </section>
+
+    <section id="scanner" class="panel tab-panel">
+      <h2>Phone scan workflow</h2>
+      <p>Upload/take a photo of cards. v1 stores the photo and gives you a manual/AI prompt workflow. Next version wires OCR/vision.</p>
+      <input id="imageInput" type="file" accept="image/*" capture="environment" />
+      <div class="scan-layout">
+        <img id="preview" alt="Card scan preview" />
+        <div>
+          <label>AI/OCR result or manual card names <textarea id="scanText" placeholder="Paste AI result here, one card per line"></textarea></label>
+          <button id="parseScan">Parse names</button>
+          <div id="scanNames" class="chips"></div>
+          <div class="prompt-box">
+            <strong>Vision prompt to use with NOVA/photo AI:</strong>
+            <p>Identify each trading card in this image. Return one card name per line. If uncertain, write UNCERTAIN: guessed name.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="deck" class="panel tab-panel">
+      <div class="section-head">
+        <div><h2>Deck build tracker</h2><p>Local-only deck list saved in your browser.</p></div>
+        <div class="actions"><button id="exportDeck">Export deck</button><button id="clearDeck" class="ghost">Clear</button></div>
+      </div>
+      <textarea id="deckExport" placeholder="Export appears here"></textarea>
+      <div id="deckList" class="deck-list"></div>
+    </section>
+
+    <section id="topdecks" class="panel tab-panel">
+      <h2>Top deck tracker</h2>
+      <p>Seed list for competitive meta tracking. Use this to compare what is strong vs what is affordable.</p>
+      <div id="topDeckList" class="deck-cards"></div>
+    </section>
+
+    <section id="budget" class="panel tab-panel">
+      <h2>Cheaper competitive deck finder</h2>
+      <div class="controls">
+        <input id="budgetMax" type="number" value="80" min="0" step="5" />
+        <button id="findBudget">Find decks under budget</button>
+      </div>
+      <div id="budgetResults" class="deck-cards"></div>
+    </section>
+
+    <section id="agents" class="panel tab-panel">
+      <div class="section-head">
+        <div>
+          <h2>AI agent plan</h2>
+          <p>Inspired by Paperclip: split the app into small supervised agents later, but keep v1 simple and manual.</p>
+        </div>
+        <button id="copyAgentPlan" class="ghost">Copy plan</button>
+      </div>
+      <div class="deck-cards" id="agentCards"></div>
+      <div class="prompt-box">
+        <strong>Paperclip verdict:</strong>
+        <p>Use Paperclip later as an orchestration layer for scan/price/meta agents. Do not depend on it for the MVP yet.</p>
+      </div>
+      <textarea id="agentPlanOut" placeholder="Agent plan appears here"></textarea>
+    </section>
+  </main>
+
+  <footer>
+    <span>Local-first. No account. Pokémon API + manual Riftbound data.</span>
+    <span>Next: real OCR/vision + price source connectors.</span>
+  </footer>
+
+  <script src="seed.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

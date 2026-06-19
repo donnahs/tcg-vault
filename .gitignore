@@ -1,0 +1,27 @@
+# generated / dependencies
+node_modules/
+dist/
+build/
+.next/
+coverage/
+.cache/
+.pytest_cache/
+__pycache__/
+*.pyc
+.venv/
+venv/
+# secrets / local data
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.sqlite
+*.sqlite3
+*.db
+*.log
+.DS_Store
+# local packages
+dist-packages/
+packages/*.zip
